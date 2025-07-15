@@ -361,10 +361,10 @@ def sample_volume(
             rgb = outputs['rgb'].reshape((-1, 3))
 
             # Mask irrelevant semantic masks and density values
-            mask_sem = semantic >= 3  # 20
-            mask_den = density >= 70  # 10
+            mask_sem = semantic >= 3
+            mask_den = density >= 70
             mask_sem_colormap = semantics_colormap >= 0.999
-            mask_only_sem = semantics_colormap >= 0.99  # 9
+            mask_only_sem = semantics_colormap >= 0.99
 
             # Semantic colormap
             points_3d_semantic_colormap = points_3d[
@@ -388,8 +388,8 @@ def sample_volume(
                 color_semantic = semantic[mask_sem.sum(dim=1).to(bool) & mask_den.sum(dim=1).to(bool)]
             color_semantic = torch.hstack([color_semantic, torch.sigmoid(
                 semantic[mask_sem.sum(dim=1).to(bool) & mask_den.sum(dim=1).to(bool)][:, 0]).unsqueeze(-1)])
-            points_sem.append(points_3d_semantic.cpu())  # & mask_den.sum(dim=1).to(bool)
-            color_semantics.append(color_semantic.cpu())  # & mask_den.sum(dim=1).to(bool)
+            points_sem.append(points_3d_semantic.cpu())
+            color_semantics.append(color_semantic.cpu())
 
             # RGB
             points_3d_density = points_3d[mask_den.sum(dim=1).to(bool)]
@@ -422,16 +422,22 @@ def sample_volume(
     def transform_pcd(pcd: o3d.geometry.PointCloud, trans_json: dict) -> o3d.geometry.PointCloud:
         """Applies scaling and inverse transformation to a point cloud."""
         # The matrix in transforms.json maps world coordinates to NeRF's normalized space.
-        # We need its inverse to go from NeRF space back to world space.
         transform_matrix = np.array(trans_json['transform'])
+
+        # --- ここからが修正箇所 ---
+        # Check if the matrix is 3x4, and if so, convert it to a 4x4 homogeneous matrix.
+        if transform_matrix.shape == (3, 4):
+            bottom_row = np.array([[0.0, 0.0, 0.0, 1.0]])
+            transform_matrix = np.vstack((transform_matrix, bottom_row))
+        # --- ここまでが修正箇所 ---
+
+        # We need its inverse to go from NeRF space back to world space.
         inverse_transform = np.linalg.inv(transform_matrix)
         
         # Nerfstudio often scales the scene. We reverse this scaling first.
-        # The 'scale' in the json is the factor used to normalize the scene size.
         pcd.scale(1.0 / trans_json['scale'], center=(0, 0, 0))
         
         # This second scaling seems specific to the FruitNeRF project, keeping it.
-        # It might be related to the `aabb_scale` parameter used during training.
         pcd.scale(2.0, center=(0, 0, 0))
 
         # Apply the inverse transformation to move from NeRF coordinates to original world coordinates.
@@ -458,7 +464,7 @@ def sample_volume(
     points_sem = torch.cat(points_sem, dim=0)
     semantic_rgbs = torch.cat(color_semantics, dim=0)
     if semantic_rgbs.shape[0] != 0:
-        semantic_rgbs /= semantic_rgbs.max()  # Normalize to visualize as point cloud
+        semantic_rgbs /= semantic_rgbs.max()
 
     pcd = o3d.geometry.PointCloud()
     pcd.points = o3d.utility.Vector3dVector(points_sem.double().cpu().numpy())
@@ -475,7 +481,7 @@ def sample_volume(
     points_den = torch.cat(points_den, dim=0)
     density_rgb = torch.cat(densities, dim=0)
     if density_rgb.shape[0] != 0:
-        density_rgb /= density_rgb.max()  # Normalize to visualize as point cloud
+        density_rgb /= density_rgb.max()
 
     pcd = o3d.geometry.PointCloud()
     pcd.points = o3d.utility.Vector3dVector(points_den.double().cpu().numpy())
