@@ -138,10 +138,13 @@ RUN apt-get update && apt-get install -y libgl1
 # # デフォルトのコマンド
 # CMD ["/bin/bash"]
 
+# trimeshはclustringのために必要
+# git cloneしてインストールをしているのは、FruitNeRF改造のため
 CMD git clone -b develop https://github.com/mitsuki05/FruitNeRF.git && \
     cd FruitNeRF && \
     python -m pip install -e . && \
     rm -rf FruitNeRF && \
+    pip install trimesh==4.4.0 && \
     cd .. && \
     cd workspace && \
     /bin/bash
