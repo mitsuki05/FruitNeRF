@@ -1,4 +1,18 @@
 # Baum 01
+test = {
+    "path": "C:\Users\mitsu\Downloads\semantic_colormap.ply",
+    "remove_outliers_nb_points": 120,
+    "remove_outliers_radius": 0.015,
+    "down_sample": 0.001,
+    "eps": 0.02,
+    "cluster_merge_distance": 0.04,
+    "minimum_size_factor": 0.3,
+    "min_samples": 100,
+    "template_path": './clustering/apple_template.ply',
+    'apple_template_size': 1,
+    'gt_cluster': None,
+    'gt_count': 179,
+}
 
 Baum_01_SAM = {
     "path": "/home/se86kimy/Dropbox/07_data/For5G/Apple_24_08_23/eval/tree_01/sam/semantic_colormap_cropped.ply",

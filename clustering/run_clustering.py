@@ -71,7 +71,8 @@ if __name__ == '__main__':
 
     from clustering.config_real import (Baum_01_unet, Baum_01_unet_Big, Baum_01_SAM, Baum_01_SAM_Big,
                                         Baum_02_unet, Baum_02_unet_Big, Baum_02_SAM, Baum_02_SAM_Big,
-                                        Baum_03_unet, Baum_03_unet_Big, Baum_03_SAM, Baum_03_SAM_Big)
+                                        Baum_03_unet, Baum_03_unet_Big, Baum_03_SAM, Baum_03_SAM_Big,
+                                        test)
 
     from clustering.config_real import Fuji_unet, Fuji_unet_big, Fuji_sam, Fuji_sam_big
 
@@ -81,12 +82,13 @@ if __name__ == '__main__':
         # Baum_01_unet, Baum_01_unet_Big, Baum_01_SAM, Baum_01_SAM_Big,
         # Baum_02_unet, Baum_02_unet_Big, Baum_02_SAM, Baum_02_SAM_Big,
         # Baum_03_unet, Baum_03_unet_Big, Baum_03_SAM, Baum_03_SAM_Big,
-        Apple_GT_1024x1024_300, Apple_SAM_1024x1024_300,
-        Pear_GT_1024x1024_300, Pear_SAM_1024x1024_300,
-        Plum_GT_1024x1024_300, Plum_SAM_1024x1024_300,
-        Lemon_GT_1024x1024_300, Lemon_SAM_1024x1024_300,
-        Peach_GT_1024x1024_300, Peach_SAM_1024x1024_300,
-        Mango_GT_1024x1024_300, Mango_SAM_1024x1024_300
+        # Apple_GT_1024x1024_300, Apple_SAM_1024x1024_300,
+        # Pear_GT_1024x1024_300, Pear_SAM_1024x1024_300,
+        # Plum_GT_1024x1024_300, Plum_SAM_1024x1024_300,
+        # Lemon_GT_1024x1024_300, Lemon_SAM_1024x1024_300,
+        # Peach_GT_1024x1024_300, Peach_SAM_1024x1024_300,
+        # Mango_GT_1024x1024_300, Mango_SAM_1024x1024_300
+        test
     ]
 
     results = {}

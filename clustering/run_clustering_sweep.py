@@ -70,7 +70,7 @@ if __name__ == '__main__':
                                              Plum_GT_1024x1024_300, Plum_SAM_1024x1024_300,
                                              Lemon_GT_1024x1024_300, Lemon_SAM_1024x1024_300,
                                              Peach_GT_1024x1024_300, Peach_SAM_1024x1024_300,
-                                             Mango_GT_1024x1024_300, Mango_SAM_1024x1024_300)
+                                             Mango_GT_1024x1024_300, Mango_SAM_1024x1024_300,)
 
     from clustering.config_real import (Baum_01_unet, Baum_01_unet_Big, Baum_01_SAM, Baum_01_SAM_Big,
                                         Baum_02_unet, Baum_02_unet_Big, Baum_02_SAM, Baum_02_SAM_Big,
